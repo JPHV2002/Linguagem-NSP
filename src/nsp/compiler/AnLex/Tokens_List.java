@@ -41,7 +41,6 @@ public enum Tokens_List{
     ID(""),
     DOISPONTOS(":");
 
-    
     private String a;
   
     Tokens_List(String paramString1) {
