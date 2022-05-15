@@ -2,12 +2,14 @@ package nsp.compiler.AnLex;
 
 public enum Tokens_List{
     FUNCTION("func"),
+    SHOW("show"),
     RETURN("->"),
     INT("int"),
     FLOAT ("float"),
     BOOLEAN("boolean"),
     CHAR("char"),
     STRING("string"),
+    VOID("void"),
     IF("if"),
     ELSE("else"),
     WHILE("while"),
@@ -31,8 +33,14 @@ public enum Tokens_List{
     F_PARENTESES (")"),
     A_CHAVES ("{"),
     F_CHAVES ("}"),
-    NEXTLINE("\n");
-    
+    NEXTLINE("\n"),
+    CHAR_VALUE(""),
+    STRING_VALUE(""),
+    INT_VALUE(""),
+    FLOAT_VALUE(""),
+    ID(""),
+    DOISPONTOS(":");
+
     
     private String a;
   
