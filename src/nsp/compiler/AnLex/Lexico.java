@@ -26,27 +26,41 @@ public class Lexico {
         while(this.pos < i){
             if(this.codFont.charAt(this.pos) == '{'){
                 this.tokens.add(new Token(Tokens_List.A_CHAVES, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '}'){
                 this.tokens.add(new Token(Tokens_List.F_CHAVES, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '('){
                 this.tokens.add(new Token(Tokens_List.A_PARENTESES, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == ')'){
                 this.tokens.add(new Token(Tokens_List.F_PARENTESES, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == ';'){
                 this.tokens.add(new Token(Tokens_List.EOI, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '\n'){
                 this.col = 0;
                 this.lin ++;
+                this.pos ++;
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '<'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
                     this.tokens.add(new Token(Tokens_List.MENOR_IGUAL, this.lin, this.col-1, this.col));
+                    lookAhead();
+                    continue;
                 }else{
                     this.tokens.add(new Token(Tokens_List.MENOR, this.lin, this.col-1, this.col-1));
                     continue;
@@ -56,33 +70,59 @@ public class Lexico {
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
                     this.tokens.add(new Token(Tokens_List.MENOR_IGUAL, this.lin, this.col-1, this.col));
+                    lookAhead();
+                    continue;
                 }else{
                     this.tokens.add(new Token(Tokens_List.MENOR, this.lin, this.col-1, this.col-1));
                     continue;
                 }
             }
+            if(this.codFont.charAt(this.pos) == '='){
+                this.tokens.add(new Token(Tokens_List.IGUALDADE, '=', this.lin, this.col, this.col));
+                lookAhead();
+                continue;
+            }
+            if(this.codFont.charAt(this.pos) == '!'){
+                lookAhead();
+                if(this.codFont.charAt(this.pos) == '='){
+                    this.tokens.add(new Token(Tokens_List.DESIGUALDADE, "!=", this.lin, this.col-1, this.col));
+                    lookAhead();
+                    continue;
+                }
+                this.tokens.add(new Token(Tokens_List.NOT, "!", this.lin, this.col-1, this.col-1));
+                continue;
+            }
             if(this.codFont.charAt(this.pos) == ':'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
                     this.tokens.add(new Token(Tokens_List.ATRIBUICAO, this.lin, this.col - 1, this.col));
+                    lookAhead();
+                    continue;
                 }else{
                     this.tokens.add(new Token(Tokens_List.DOISPONTOS, "", this.lin, this.col-1, this.col-1));
+                    continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == '-'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '>'){
                     this.tokens.add(new Token(Tokens_List.RETURN, this.lin, this.col - 1, this.col));
+                    lookAhead();
+                    continue;
                 }else{
-                    lookBack();
                     this.tokens.add(new Token(Tokens_List.SUBTRACAO, this.lin, this.col, this.col));
+                    continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == '+'){
                 this.tokens.add(new Token(Tokens_List.ADICAO, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '*'){
                 this.tokens.add(new Token(Tokens_List.MULTIPLICACAO, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '\"'){
                 int start = this.col;
@@ -94,6 +134,8 @@ public class Lexico {
                 }
                 string += this.codFont.charAt(this.pos);
                 this.tokens.add(new Token(Tokens_List.STRING_VALUE, string,this.lin,start, this.col));
+                lookAhead();
+                continue;
             }
             if(this.codFont.charAt(this.pos) == '\''){
                 int start = this.col;
@@ -102,10 +144,13 @@ public class Lexico {
                 letra += "" + this.codFont.charAt(this.pos);
                 lookAhead();
                 if(this.codFont.charAt(this.pos) != '\''){
-                    //ERROR
+                    lookAhead();
+                    continue;
                 }else{
                     letra += "" + this.codFont.charAt(this.pos);
                     this.tokens.add(new Token(Tokens_List.CHAR_VALUE, letra,this.lin,start, this.col));
+                    lookAhead();
+                    continue;
                 }
             }
             if(isDig(this.codFont.charAt(this.pos))){
@@ -124,18 +169,58 @@ public class Lexico {
                         lookAhead();
                     }
                     this.tokens.add(new Token(Tokens_List.FLOAT, Float.parseFloat(number),this.lin, start, this.col));
+                    lookAhead();
+                    continue;
                 }else{
-                    this.tokens.add(new Token(Tokens_List.INT, Integer.parseInt(number),this.lin, start, this.col));           
+                    this.tokens.add(new Token(Tokens_List.INT, Integer.parseInt(number),this.lin, start, this.col));   
+                    lookAhead();
+                    continue;  
                 }
-                lookBack();
-            }
-            if(this.codFont.charAt(this.pos) == 'c'){
-
             }
             if(this.codFont.charAt(this.pos) == 'i'){
-                
+                int start = this.col;
+                lookAhead();
+                if(this.codFont.charAt(this.pos) == 'n'){
+                    this.tokens.add(new Token(Tokens_List.INT, "int", this.lin, this.col - 1, this.col+1));
+                    lookAhead(2);
+                    continue;
+                }else if(this.codFont.charAt(this.pos) == 'f'){
+                    this.tokens.add(new Token(Tokens_List.INT, "int", this.lin, this.col - 1, this.col));
+                    lookAhead();
+                    continue;
+                }else{
+                    lookBack();
+                    String id = "" + this.codFont.charAt(this.pos);
+                    lookAhead();
+                    while(!isEndId(this.codFont.charAt(this.pos))){
+                        id += "" + this.codFont.charAt(this.pos);
+                        lookAhead();
+                    }
+                    this.tokens.add(new Token(Tokens_List.ID, id, this.lin, start, this.col));
+                    continue;
+                }
+            }
+            if(this.codFont.charAt(this.pos) == 'c'){
+                int start = this.col;
+                lookAhead();
+                if(this.codFont.charAt(this.pos) == 'h'){
+                    this.tokens.add(new Token(Tokens_List.CHAR, "char", this.lin, this.col - 1, this.col+2));
+                    lookAhead(3);
+                    continue;
+                }else{
+                    lookBack();
+                    String id = "" + this.codFont.charAt(this.pos);
+                    lookAhead();
+                    while(!isEndId(this.codFont.charAt(this.pos))){
+                        id += "" + this.codFont.charAt(this.pos);
+                        lookAhead();
+                    }
+                    this.tokens.add(new Token(Tokens_List.ID, id, this.lin, start, this.col));
+                    continue;
+                }
             }
             if(this.codFont.charAt(this.pos) == 's'){
+                int start = this.col;
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == 'h'){
                     this.tokens.add(new Token(Tokens_List.SHOW, "show", this.lin, this.col - 1, this.col+2));
@@ -144,6 +229,17 @@ public class Lexico {
                 }else if(this.codFont.charAt(this.pos) == 't'){
                     this.tokens.add(new Token(Tokens_List.SHOW, "string", this.lin, this.col - 1, this.col+4));
                     lookAhead(4);
+                    continue;
+                }else{
+                    lookBack();
+                    String id = "" + this.codFont.charAt(this.pos);
+                    lookAhead();
+                    while(!isEndId(this.codFont.charAt(this.pos))){
+                        id += "" + this.codFont.charAt(this.pos);
+                        lookAhead();
+                    }
+                    this.tokens.add(new Token(Tokens_List.ID, id, this.lin, start, this.col));
+                    continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == 'f'){
@@ -152,12 +248,25 @@ public class Lexico {
                 if(this.codFont.charAt(this.pos) == 'u'){
                     this.tokens.add(new Token(Tokens_List.FUNCTION, "func" , this.lin, start, this.col+2));
                     lookAhead(3);
+                    continue;
                 }else if(this.codFont.charAt(this.pos) == 'l'){
                     this.tokens.add(new Token(Tokens_List.FLOAT, "float" , this.lin, start, this.col+3));
                     lookAhead(4);
+                    continue;
                 }else if(this.codFont.charAt(this.pos) == 'o'){
                     this.tokens.add(new Token(Tokens_List.FOR, "for" , this.lin, start, this.col+1));
                     lookAhead(2);
+                    continue;
+                }else{
+                    lookBack();
+                    String id = "" + this.codFont.charAt(this.pos);
+                    lookAhead();
+                    while(!isEndId(this.codFont.charAt(this.pos))){
+                        id += "" + this.codFont.charAt(this.pos);
+                        lookAhead();
+                    }
+                    this.tokens.add(new Token(Tokens_List.ID, id, this.lin, start, this.col));
+                    continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == 'v'){
@@ -174,10 +283,12 @@ public class Lexico {
                     lookAhead();
                 }
                 this.tokens.add(new Token(Tokens_List.ID, id, this.lin, start, this.col));
-                lookBack();
+                continue;
+            } 
+            if (isSpace(this.codFont.charAt(this.pos))){
+                lookAhead();
+                continue;
             }
-            this.col ++;
-            this.pos ++;
         }
 
         return this.tokens;
@@ -210,6 +321,10 @@ public class Lexico {
     }
 
     public boolean isEndId(char value){
-        return (value == ' ' || value == '\t' || value == '\r' || value == '\n' || value == '(' || value == ')'|| value == '{' || value == '}'|| value == '[' || value == ']');
+        return (value == ' ' || value == '\t' || value == '\r' || value == '\n' || value == '(' || value == ')'|| value == '{' || value == '}'|| value == '[' || value == ']' || value == ';');
+    }
+
+    public boolean isSpace(char value){
+        return (value == ' ');
     }
 }
