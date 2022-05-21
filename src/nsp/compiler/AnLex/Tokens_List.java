@@ -39,8 +39,8 @@ public enum Tokens_List{
     INT_VALUE(""),
     FLOAT_VALUE(""),
     ID(""),
-    DOISPONTOS(":");
-
+    DOISPONTOS(":"),
+    BOOLEAN_VALUE("");
     
     private String a;
   

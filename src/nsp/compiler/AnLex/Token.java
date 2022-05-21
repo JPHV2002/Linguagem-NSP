@@ -35,9 +35,63 @@ public class Token {
     public Token(Tokens_List tipo, String value, int line, int col_Start, int col_End){
         this.tipo = tipo;
         this.line = line;
+        this.lexeme = value;
+        this.col_Start = col_Start;
+        this.col_End = col_End;
+    }
+
+    public Token(String value, int line, int col_Start, int col_End){
+        this.line = line;
         this.lexeme = "" + value;
         this.col_Start = col_Start;
         this.col_End = col_End;
+        switch(value){
+            case "if":
+                this.tipo = Tokens_List.IF;
+                break;
+            case "int":
+                this.tipo = Tokens_List.INT;
+                break;
+            case "char":
+                this.tipo = Tokens_List.CHAR;
+                break;
+            case "show":
+                this.tipo = Tokens_List.SHOW;
+                break;
+            case "string":
+                this.tipo = Tokens_List.STRING;
+                break;
+            case "func":
+                this.tipo = Tokens_List.FUNCTION;
+                break;
+            case "float":
+                this.tipo = Tokens_List.FLOAT;
+                break;
+            case "for":
+                this.tipo = Tokens_List.FOR;
+                break;
+            case "else":
+                this.tipo = Tokens_List.ELSE;
+                break;
+            case "void":
+                this.tipo = Tokens_List.VOID;
+                break;
+            case "while":
+                this.tipo = Tokens_List.WHILE;
+                break;
+            case "boolean":
+                this.tipo = Tokens_List.BOOLEAN;
+                break;
+            case "and":
+                this.tipo = Tokens_List.AND;
+                break;
+            case "or":
+                this.tipo = Tokens_List.OR;
+                break;
+            default:
+                this.tipo = Tokens_List.ID;
+                break;
+        }
     }
 
     public String toString(){
