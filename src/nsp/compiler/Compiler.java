@@ -18,10 +18,16 @@ public class Compiler {
     public void run(){
         System.out.println("Compiling NSP:");
         try {
+            //Leitura do Arquivo
             File file = new File(filePath[0]);
             this.codFont = file.getCodFont();
+
+            //Lexico
             List<Token> tokens = this.compile.lexico(this.codFont);
             System.out.println("Done");
+
+            //Sintatico
+            this.compile.sintatico(tokens);
         } catch (RuntimeException e) {
             System.out.println("Error");
             System.exit(1);

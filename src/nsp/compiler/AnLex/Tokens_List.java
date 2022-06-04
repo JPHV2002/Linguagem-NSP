@@ -42,9 +42,6 @@ public enum Tokens_List{
     DOISPONTOS(":"),
     BOOLEAN_VALUE("");
     
-    private String a;
-  
     Tokens_List(String paramString1) {
-      this.a = paramString1;
     }
 }
