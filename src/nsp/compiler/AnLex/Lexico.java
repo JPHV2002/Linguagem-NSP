@@ -44,6 +44,11 @@ public class Lexico {
                 lookAhead();
                 continue;
             }
+            if(this.codFont.charAt(this.pos) == ','){
+                this.tokens.add(new Token(Tokens_List.VIRGULA, this.lin, this.col, this.col));
+                lookAhead();
+                continue;
+            }
             if(this.codFont.charAt(this.pos) == ';'){
                 this.tokens.add(new Token(Tokens_List.EOI, this.lin, this.col, this.col));
                 lookAhead();
@@ -168,12 +173,10 @@ public class Lexico {
                         number += this.codFont.charAt(this.pos);
                         lookAhead();
                     }
-                    this.tokens.add(new Token(Tokens_List.FLOAT, Float.parseFloat(number),this.lin, start, this.col));
-                    lookAhead();
+                    this.tokens.add(new Token(Tokens_List.FLOAT_VALUE, Float.parseFloat(number),this.lin, start, this.col));
                     continue;
                 }else{
-                    this.tokens.add(new Token(Tokens_List.INT, Integer.parseInt(number),this.lin, start, this.col));   
-                    lookAhead();
+                    this.tokens.add(new Token(Tokens_List.INT_VALUE, Integer.parseInt(number),this.lin, start, this.col));   
                     continue;  
                 }
             }
@@ -201,7 +204,7 @@ public class Lexico {
                 continue;
             }
         }
-
+        this.tokens.add(new Token(Tokens_List.EOF, this.lin, this.col, this.col));
         return this.tokens;
     }
 

@@ -40,7 +40,10 @@ public enum Tokens_List{
     FLOAT_VALUE(""),
     ID(""),
     DOISPONTOS(":"),
-    BOOLEAN_VALUE("");
+    BOOLEAN_VALUE(""),
+    MAIN("main"),
+    EOF(""),
+    VIRGULA(",");
     
     Tokens_List(String paramString1) {
     }

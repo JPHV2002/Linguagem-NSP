@@ -88,6 +88,9 @@ public class Token {
             case "or":
                 this.tipo = Tokens_List.OR;
                 break;
+            case "main":
+                this.tipo = Tokens_List.MAIN;
+                break;
             default:
                 this.tipo = Tokens_List.ID;
                 break;

@@ -19,5 +19,6 @@ public class Compile {
         System.out.print("\tAnalise Sintatica... ");
         Sintatico anSintatico;
         (anSintatico = new Sintatico()).tokenList = tokens;
+        anSintatico.run();
     }
 }
