@@ -8,7 +8,7 @@ public class Token {
     public final int col_End;
     public final String lexeme;
 
-    public Token(Tokens_List tipo, int line, int col_Start, int col_End){
+    public Token(Tokens_List tipo,int line, int col_Start, int col_End){
         this.tipo = tipo;
         this.line = line;
         this.col_Start = col_Start;

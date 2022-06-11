@@ -1,25 +1,37 @@
-package nsp.compiler.AnSin.Regras.RegrasBloco;
+package nsp.compiler.AnSin.Regras.RegrasBloco.Variable;
 
 import java.util.List;
 
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
 import nsp.compiler.AnSin.Regras.Error;
+import nsp.compiler.Arvore.GeradorArvore;
 
-public class variableAttribution {
+public class variableDeclaration {
+    
     private List<Token> tokens;
     private int pos;
 
-    public variableAttribution(List<Token> tokens){
+    public variableDeclaration(List<Token> tokens){
         this.tokens = tokens;
     }
-
+    
     public int run(int pos){
         this.pos = pos;
-        match(Tokens_List.ATRIBUICAO);
-        isValor();
+        match(Tokens_List.ID);
+        GeradorArvore.grArvLex(this.tokens, this.pos);
+        lookAhead();
+        if(this.tokens.get(this.pos).tipo ==  Tokens_List.ATRIBUICAO){
+            GeradorArvore.grArvLex(this.tokens, this.pos);
+            isValor();
+            GeradorArvore.grArvLex(this.tokens, this.pos);
+        }else{
+            this.pos --;
+        }
         match(Tokens_List.EOI);
-        return this.pos+1;
+        GeradorArvore.grArvLex(this.tokens, this.pos);
+        lookAhead();
+        return this.pos;
     }
 
     public void match(Tokens_List esperado){

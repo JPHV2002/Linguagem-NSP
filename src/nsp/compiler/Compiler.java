@@ -2,6 +2,7 @@ package nsp.compiler;
 
 import java.util.List;
 import nsp.compiler.AnLex.Token;
+import nsp.compiler.Arvore.GeradorArvore;
 
 public class Compiler {
     
@@ -33,9 +34,12 @@ public class Compiler {
             //Lexico
             List<Token> tokens = this.compile.lexico(this.codFont);
             System.out.println("Done");
+            // System.out.println(tokens);
 
             //Sintatico
             this.compile.sintatico(tokens);
+            System.out.println("Done");
+            GeradorArvore.printArv();
         } catch (RuntimeException e) {
             System.out.println("Error");
             System.out.println(e);

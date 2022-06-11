@@ -1,30 +1,34 @@
-package nsp.compiler.AnSin.Regras.RegrasBloco;
+package nsp.compiler.AnSin.Regras.RegrasBloco.Variable;
 
 import java.util.List;
 
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
 import nsp.compiler.AnSin.Regras.Error;
+import nsp.compiler.Arvore.GeradorArvore;
 
-public class variableDeclaration {
-    
+public class variableAttribution {
     private List<Token> tokens;
     private int pos;
 
-    public variableDeclaration(List<Token> tokens){
+    public variableAttribution(List<Token> tokens){
         this.tokens = tokens;
     }
-    
+
     public int run(int pos){
         this.pos = pos;
-        match(Tokens_List.ID);
-        lookAhead();
-        if(this.tokens.get(this.pos).tipo ==  Tokens_List.ATRIBUICAO){
-            isValor();
+        GeradorArvore.grArvLex(this.tokens, this.pos);
+        match(Tokens_List.ATRIBUICAO);
+        GeradorArvore.grArvLex(this.tokens, this.pos);
+        if(isValor()){
+
+        }else{
+            match(Tokens_List.ID);
+            GeradorArvore.grArvLex(this.tokens, this.pos);
         }
         match(Tokens_List.EOI);
-        lookAhead();
-        return this.pos;
+        GeradorArvore.grArvLex(this.tokens, this.pos);
+        return this.pos+1;
     }
 
     public void match(Tokens_List esperado){
@@ -41,7 +45,7 @@ public class variableDeclaration {
         this.pos ++;
     }
 
-    public void isValor(){
+    public boolean isValor(){
         lookAhead();
         switch (this.tokens.get(this.pos).tipo) {
             case INT_VALUE:
@@ -49,11 +53,11 @@ public class variableDeclaration {
             case CHAR_VALUE:
             case BOOLEAN_VALUE:
             case STRING_VALUE:
-                break;
+                return true;
         
             default:
-                Error.errorTipo(this.tokens.get(this.pos).tipo);
-                break;
+                this.pos --;
+                return false;
         }
     }
 }

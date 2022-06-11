@@ -25,32 +25,32 @@ public class Lexico {
 
         while(this.pos < i){
             if(this.codFont.charAt(this.pos) == '{'){
-                this.tokens.add(new Token(Tokens_List.A_CHAVES, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.A_CHAVES, "{",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == '}'){
-                this.tokens.add(new Token(Tokens_List.F_CHAVES, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.F_CHAVES, "}",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == '('){
-                this.tokens.add(new Token(Tokens_List.A_PARENTESES, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.A_PARENTESES, "(",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == ')'){
-                this.tokens.add(new Token(Tokens_List.F_PARENTESES, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.F_PARENTESES, ")",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == ','){
-                this.tokens.add(new Token(Tokens_List.VIRGULA, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.VIRGULA, ",",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == ';'){
-                this.tokens.add(new Token(Tokens_List.EOI, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.EOI, ";",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
@@ -63,34 +63,34 @@ public class Lexico {
             if(this.codFont.charAt(this.pos) == '<'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
-                    this.tokens.add(new Token(Tokens_List.MENOR_IGUAL, this.lin, this.col-1, this.col));
+                    this.tokens.add(new Token(Tokens_List.MENOR_IGUAL, "<=",this.lin, this.col-1, this.col));
                     lookAhead();
                     continue;
                 }else{
-                    this.tokens.add(new Token(Tokens_List.MENOR, this.lin, this.col-1, this.col-1));
+                    this.tokens.add(new Token(Tokens_List.MENOR, "<",this.lin, this.col-1, this.col-1));
                     continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == '>'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
-                    this.tokens.add(new Token(Tokens_List.MAIOR_IGUAL, this.lin, this.col-1, this.col));
+                    this.tokens.add(new Token(Tokens_List.MAIOR_IGUAL, ">=",this.lin, this.col-1, this.col));
                     lookAhead();
                     continue;
                 }else{
-                    this.tokens.add(new Token(Tokens_List.MAIOR, this.lin, this.col-1, this.col-1));
+                    this.tokens.add(new Token(Tokens_List.MAIOR, ">",this.lin, this.col-1, this.col-1));
                     continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == '='){
-                this.tokens.add(new Token(Tokens_List.IGUALDADE, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.IGUALDADE, "=",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == '!'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
-                    this.tokens.add(new Token(Tokens_List.DESIGUALDADE, this.lin, this.col-1, this.col));
+                    this.tokens.add(new Token(Tokens_List.DESIGUALDADE, "!=",this.lin, this.col-1, this.col));
                     lookAhead();
                     continue;
                 }
@@ -100,32 +100,32 @@ public class Lexico {
             if(this.codFont.charAt(this.pos) == ':'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '='){
-                    this.tokens.add(new Token(Tokens_List.ATRIBUICAO, this.lin, this.col - 1, this.col));
+                    this.tokens.add(new Token(Tokens_List.ATRIBUICAO, ":=",this.lin, this.col - 1, this.col));
                     lookAhead();
                     continue;
                 }else{
-                    this.tokens.add(new Token(Tokens_List.DOISPONTOS, this.lin, this.col-1, this.col-1));
+                    this.tokens.add(new Token(Tokens_List.DOISPONTOS, ":",this.lin, this.col-1, this.col-1));
                     continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == '-'){
                 lookAhead();
                 if(this.codFont.charAt(this.pos) == '>'){
-                    this.tokens.add(new Token(Tokens_List.RETURN, this.lin, this.col - 1, this.col));
+                    this.tokens.add(new Token(Tokens_List.RETURN, "->",this.lin, this.col - 1, this.col));
                     lookAhead();
                     continue;
                 }else{
-                    this.tokens.add(new Token(Tokens_List.SUBTRACAO, this.lin, this.col, this.col));
+                    this.tokens.add(new Token(Tokens_List.SUBTRACAO, "-",this.lin, this.col, this.col));
                     continue;
                 }
             }
             if(this.codFont.charAt(this.pos) == '+'){
-                this.tokens.add(new Token(Tokens_List.ADICAO, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.ADICAO, "+", this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
             if(this.codFont.charAt(this.pos) == '*'){
-                this.tokens.add(new Token(Tokens_List.MULTIPLICACAO, this.lin, this.col, this.col));
+                this.tokens.add(new Token(Tokens_List.MULTIPLICACAO, "*",this.lin, this.col, this.col));
                 lookAhead();
                 continue;
             }
