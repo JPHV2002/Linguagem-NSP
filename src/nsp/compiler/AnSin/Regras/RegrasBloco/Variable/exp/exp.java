@@ -5,7 +5,6 @@ import java.util.List;
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
 import nsp.compiler.AnSin.Exp.Expressao;
-import nsp.compiler.AnSin.Regras.Error;
 import nsp.compiler.AnSin.Utils.Utils;
 import nsp.compiler.Arvore.GeradorArvore;
 
@@ -17,7 +16,6 @@ import nsp.compiler.Arvore.GeradorArvore;
 
 public class exp {
     
-    private int pos;
     private List<Token> tokens;
     private Expressao expr;
 

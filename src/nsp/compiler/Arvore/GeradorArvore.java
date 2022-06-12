@@ -3,7 +3,6 @@ package nsp.compiler.Arvore;
 import java.util.List;
 
 import nsp.compiler.AnLex.Token;
-import nsp.compiler.AnLex.Tokens_List;
 
 public class GeradorArvore{
     private static String arvore = "";
