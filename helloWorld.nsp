@@ -1,5 +1,4 @@
 main(){
-    string helloWorld := "HelloWorld";
-
-    int a := 1 + 2 + 3 - 6 + 6 + 3 - 4 + 1;
+    int a := 4 + 2 * 2;
 }
+

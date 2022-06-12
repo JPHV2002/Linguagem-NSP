@@ -9,6 +9,12 @@ import nsp.compiler.AnSin.Regras.Error;
 import nsp.compiler.AnSin.Utils.Utils;
 import nsp.compiler.Arvore.GeradorArvore;
 
+
+//exp -> termo + exp | termo - exp | termo
+//termo -> fator * termo | fator / termo | fator
+//fator -> dig | (exp)
+// dig -> float_value | int_value
+
 public class exp {
     
     private int pos;
@@ -21,55 +27,96 @@ public class exp {
         this.expr.grAvalInicio();
     }   
 
-    public int run(int pos){
-        this.pos = pos;
-        if(isValor()){
-            this.expr.grAvalValor(this.tokens.get(this.pos).lexeme);
-            System.out.println(this.expr.pilha);
-            GeradorArvore.grArvLex(this.tokens, this.pos);
-            this.pos ++;
-            this.pos = run(this.pos);
-        }else if(this.tokens.get(this.pos).tipo != Tokens_List.EOI){
-            if(this.tokens.get(this.pos).tipo == Tokens_List.ADICAO){
-                GeradorArvore.grArvLex(this.tokens, this.pos);
-                this.pos ++;
-                this.expr.grAvalValor(this.tokens.get(this.pos).lexeme);
-                System.out.println(this.expr.pilha);
-                GeradorArvore.grArvLex(this.tokens, this.pos);
-                this.expr.grAvalMais();
-                System.out.println(this.expr.pilha);
-                this.pos ++;
-                this.pos = run(this.pos);
-            }else if(this.tokens.get(this.pos).tipo == Tokens_List.SUBTRACAO){
-                GeradorArvore.grArvLex(this.tokens, this.pos);
-                this.pos ++;
-                this.expr.grAvalValor(this.tokens.get(this.pos).lexeme);
-                System.out.println(this.expr.pilha);
-                GeradorArvore.grArvLex(this.tokens, this.pos);
-                this.expr.grAvalMenos();
-                System.out.println(this.expr.pilha);
-                this.pos ++;
-                this.pos = run(this.pos);
-            }
+    //exp -> termo + exp | termo - exp | termo
+    public int runExp(int pos){
+        int posExp = pos;
+        GeradorArvore.grArvTermo();
+        posExp = runTermo(posExp);
+        GeradorArvore.grArvFTermo();
+        if(this.tokens.get(posExp).tipo == Tokens_List.EOI){
+            return posExp-1;
         }else{
-            this.pos -- ;
+            if(this.tokens.get(posExp).tipo == Tokens_List.ADICAO){
+                GeradorArvore.grArvLex(this.tokens, posExp);
+                posExp ++;
+                GeradorArvore.grArvExp();
+                posExp = runExp(posExp);
+                GeradorArvore.grArvFExp();
+                this.expr.grAvalMais();
+                System.out.println(expr.pilha());
+            }else if(this.tokens.get(posExp).tipo == Tokens_List.SUBTRACAO){
+                GeradorArvore.grArvLex(this.tokens, posExp);
+                posExp ++;
+                GeradorArvore.grArvExp();
+                posExp = runExp(posExp);
+                GeradorArvore.grArvFExp();
+                this.expr.grAvalMenos();
+                System.out.println(expr.pilha());
+            }else{
+                // Else
+            }
         }
 
-        return this.pos;
+       return posExp;
     }
 
-    public boolean isValor(){
-        switch (this.tokens.get(this.pos).tipo) {
+    //termo -> fator * termo | fator / termo | fator
+    public int runTermo(int pos){
+        int posTermo = pos;
+        GeradorArvore.grArvFator();
+        posTermo = runFator(posTermo);
+        GeradorArvore.grArvFFator();
+        
+        if(this.tokens.get(posTermo).tipo == Tokens_List.MULTIPLICACAO){
+            GeradorArvore.grArvLex(this.tokens, posTermo);
+            posTermo ++;
+            GeradorArvore.grArvTermo();
+            posTermo = runTermo(posTermo);
+            GeradorArvore.grArvFTermo();
+            this.expr.grAvalMulti();
+            System.out.println(expr.pilha());
+            return posTermo;
+        }else if(this.tokens.get(posTermo).tipo == Tokens_List.DIVISAO){
+            GeradorArvore.grArvLex(this.tokens, posTermo);
+            posTermo ++;
+            GeradorArvore.grArvTermo();
+            posTermo = runTermo(posTermo);
+            GeradorArvore.grArvFTermo();
+            this.expr.grAvalDiv();
+            System.out.println(expr.pilha());
+        }else{
+            return posTermo;
+        }
+        
+
+        return posTermo;
+     }
+
+     //fator -> dig | (exp)
+     public int runFator(int pos){
+        int posFator = pos;
+        if(isValor(posFator)){
+            expr.grAvalValor(this.tokens.get(posFator).lexeme);
+            GeradorArvore.grArvLex(this.tokens, posFator);
+            return posFator + 1;
+        }else{
+            posFator --;
+            posFator = Utils.match(this.tokens, Tokens_List.A_PARENTESES, posFator);
+            GeradorArvore.grArvLex(this.tokens, posFator);
+            posFator = runExp(posFator);
+            posFator = Utils.match(this.tokens, Tokens_List.A_PARENTESES, posFator);
+            GeradorArvore.grArvLex(this.tokens, posFator);
+            return posFator;
+        }
+     }
+
+    private boolean isValor(int pos){
+        switch (this.tokens.get(pos).tipo) {
             case INT_VALUE:
             case FLOAT_VALUE:
-            case CHAR_VALUE:
-            case BOOLEAN_VALUE:
-            case STRING_VALUE:
-                return true;
-        
+                return true;            
             default:
                 return false;
-                
         }
     }
 }

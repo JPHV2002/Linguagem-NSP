@@ -129,6 +129,11 @@ public class Lexico {
                 lookAhead();
                 continue;
             }
+            if(this.codFont.charAt(this.pos) == '/'){
+                this.tokens.add(new Token(Tokens_List.DIVISAO, "*",this.lin, this.col, this.col));
+                lookAhead();
+                continue;
+            }
             if(this.codFont.charAt(this.pos) == '\"'){
                 int start = this.col;
                 String string = "" + this.codFont.charAt(this.pos);

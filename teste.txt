@@ -1,33 +1,36 @@
- Main ( 
+Main ( 
     a_parenteses([(]:A_PARENTESES)  
-    IsParams (
-
-    )  
+    IsParams ()  
     f_parenteses([)]:F_PARENTESES)  
     a_chaves([{]:A_CHAVES)  
     block ( 
-        VariableDeclaration (
-            string([string]:STRING)  
-            id([helloWorld]:ID)  
-            atribuicao([:=]:ATRIBUICAO)  
-            string_value(["HelloWorld"]:STRING_VALUE)  
-            eoi([;]:EOI) 
-        )  
         VariableDeclaration ( 
             int([int]:INT)  
             id([a]:ID)  
             atribuicao([:=]:ATRIBUICAO)  
             exp ( 
-                int_value([1]:INT_VALUE) 
-                adicao([+]:ADICAO)  
-                int_value([2]:INT_VALUE)  
-                adicao([+]:ADICAO)  
-                int_value([3]:INT_VALUE)  
-                subtracao([-]:SUBTRACAO)  
-                int_value([6]:INT_VALUE) 
-            )  
-            eoi([;]:EOI) 
-        ) 
-    )  
+                termo ( 
+                    fator ( 
+                        int_value([4]:INT_VALUE) 
+                    )  
+                    multiplicacao([*]:MULTIPLICACAO)  
+                    termo ( 
+                        fator ( 
+                            int_value([2]:INT_VALUE) 
+                            ) 
+                        ) 
+                    ) 
+                    adicao([+]:ADICAO)  
+                    exp ( 
+                        termo ( 
+                            fator ( 
+                                int_value([2]:INT_VALUE) 
+                                ) 
+                            ) 
+                        ) 
+                    )  
+                eoi([;]:EOI) 
+            ) 
+        )  
     f_chaves([}]:F_CHAVES) 
 ) 

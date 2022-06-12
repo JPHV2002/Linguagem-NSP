@@ -3,30 +3,42 @@ package nsp.compiler.AnSin.Exp;
 import java.util.Stack;
 
 public class Expressao {
-    public Stack<Integer> pilha = null;
+    public Stack<Float> pilha = null;
 
     public void grAvalInicio() {
-        pilha = new Stack<Integer>();
+        pilha = new Stack<Float>();
     }
 
     public void grAvalValor(String valor){
-        var digito = Integer.parseInt("" + valor);
+        float digito = Float.parseFloat("" + valor);
         pilha.push(digito);
     }
 
     public void grAvalMais() {
-        int exp2 = pilha.pop();
-        int exp1 = pilha.pop();
+        float exp2 = pilha.pop();
+        float exp1 = pilha.pop();
         pilha.push(exp1 + exp2);
     }
 
     public void grAvalMenos() {
-        int exp2 = pilha.pop();
-        int exp1 = pilha.pop();
+        float exp2 = pilha.pop();
+        float exp1 = pilha.pop();
         pilha.push(exp1 - exp2);
     }
 
-    public Stack<Integer> pilha() {
+    public void grAvalMulti() {
+        float exp2 = pilha.pop();
+        float exp1 = pilha.pop();
+        pilha.push(exp1*exp2);
+    }
+
+    public void grAvalDiv() {
+        float exp2 = pilha.pop();
+        float exp1 = pilha.pop();
+        pilha.push(exp1/exp2);
+    }
+
+    public Stack<Float> pilha() {
         return pilha;
     }
 }

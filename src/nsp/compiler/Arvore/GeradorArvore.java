@@ -82,6 +82,20 @@ public class GeradorArvore{
         arvore += ") "; 
     }
 
+    public static void grArvFator(){
+        arvore += " fator ("; 
+    }
+    public static void grArvFFator(){
+        arvore += ") "; 
+    }
+
+    public static void grArvTermo(){
+        arvore += " termo ("; 
+    }
+    public static void grArvFTermo(){
+        arvore += ") "; 
+    }
+
     /* TERMINAIS */
     public static void grArvLex(List<Token> tokenList,int pos){
         arvore +=  " " + tokenList.get(pos).tipo.toString().toLowerCase() + "(";

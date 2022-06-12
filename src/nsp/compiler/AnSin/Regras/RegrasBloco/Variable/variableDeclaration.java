@@ -29,7 +29,7 @@ public class variableDeclaration {
             isValor();
             if(isOp()){
                 GeradorArvore.grArvExp();
-                this.pos = this._exp.run(this.pos);
+                this.pos = this._exp.runExp(this.pos);
                 GeradorArvore.grArvFExp();
             }else{
                 GeradorArvore.grArvLex(this.tokens, this.pos);
