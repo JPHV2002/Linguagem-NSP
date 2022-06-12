@@ -8,6 +8,7 @@ import nsp.compiler.AnSin.Regras.RegrasBloco.Retorno.Return;
 import nsp.compiler.AnSin.Regras.RegrasBloco.Show.Show;
 import nsp.compiler.AnSin.Regras.RegrasBloco.Variable.variableAttribution;
 import nsp.compiler.AnSin.Regras.RegrasBloco.Variable.variableDeclaration;
+import nsp.compiler.Arvore.GeradorArvore;
 import nsp.compiler.AnSin.Regras.Error;
 
 public class lstOpc {
@@ -28,19 +29,26 @@ public class lstOpc {
 
     public int run(int pos){
         this.pos = pos;
-
         if(this.tokens.get(this.pos).tipo != Tokens_List.F_CHAVES){
             if(isTipo()){
+                GeradorArvore.grArvVariableAtribution();
                 this.pos = this.vd.run(this.pos);
+                GeradorArvore.grArvFVariableAtribution();
                 run(this.pos);
             }else if(this.tokens.get(this.pos).tipo == Tokens_List.ID){
+                GeradorArvore.grArvVariableAtribution();
                 this.pos = this.va.run(this.pos);
+                GeradorArvore.grArvFVariableAtribution();
                 run(this.pos);
             }else if(this.tokens.get(this.pos).tipo == Tokens_List.RETURN){
+                GeradorArvore.grArvReturn();
                 this.pos = this.retorno.run(this.pos-1);
+                GeradorArvore.grArvFReturn();
                 run(this.pos);
             }else if(this.tokens.get(this.pos).tipo == Tokens_List.SHOW){
+                GeradorArvore.grArvShow();
                 this.pos = this.show.run(this.pos-1);
+                GeradorArvore.grArvFShow();
                 run(this.pos);
             }   
         }

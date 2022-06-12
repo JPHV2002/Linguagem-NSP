@@ -54,6 +54,13 @@ public class GeradorArvore{
         arvore += ") "; 
     }
 
+    public static void grArvFunctionMain(){
+        arvore += " Main ("; 
+    }
+    public static void grArvFFunctionMain(){
+        arvore += ") "; 
+    }
+
     public static void grArvIsParams(){
         arvore += " IsParams ("; 
     }
@@ -67,6 +74,14 @@ public class GeradorArvore{
     public static void grArvFShow(){
         arvore += ") "; 
     }
+
+    public static void grArvExp(){
+        arvore += " exp ("; 
+    }
+    public static void grArvFExp(){
+        arvore += ") "; 
+    }
+
     /* TERMINAIS */
     public static void grArvLex(List<Token> tokenList,int pos){
         arvore +=  " " + tokenList.get(pos).tipo.toString().toLowerCase() + "(";

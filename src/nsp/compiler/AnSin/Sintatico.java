@@ -34,8 +34,10 @@ public class Sintatico {
                 Error.errorToken(this.tokenList.get(this.pos).tipo, Tokens_List.FUNCTION);
             }
         }else{
+            GeradorArvore.grArvFunctionMain();
             this.anFunctionMain = new FunctionMain(this.tokenList, this.pos);
             this.pos = this.anFunctionMain.run();
+            GeradorArvore.grArvFFunctionMain();
         }
 
     }

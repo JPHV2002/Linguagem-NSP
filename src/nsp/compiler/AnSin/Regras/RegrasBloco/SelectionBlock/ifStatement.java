@@ -36,13 +36,17 @@ public class ifStatement {
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.match(this.tokens, Tokens_List.A_CHAVES, this.pos);
         GeradorArvore.grArvLex(this.tokens, this.pos);
+        GeradorArvore.grArvBlock();
         this.pos = this.opc.run(this.pos+1);
+        GeradorArvore.grArvFBlock();
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.match(this.tokens, Tokens_List.ELSE, this.pos);
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.match(this.tokens, Tokens_List.A_CHAVES, this.pos);
         GeradorArvore.grArvLex(this.tokens, this.pos);
+        GeradorArvore.grArvBlock();
         this.pos = this.opc.run(this.pos+1);
+        GeradorArvore.grArvFBlock();
         GeradorArvore.grArvLex(this.tokens, this.pos);
         return this.pos+1;
     }

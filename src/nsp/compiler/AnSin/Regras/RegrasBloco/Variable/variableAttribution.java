@@ -5,14 +5,17 @@ import java.util.List;
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
 import nsp.compiler.AnSin.Regras.Error;
+import nsp.compiler.AnSin.Regras.RegrasBloco.Variable.exp.exp;
 import nsp.compiler.Arvore.GeradorArvore;
 
 public class variableAttribution {
     private List<Token> tokens;
     private int pos;
+    private exp _exp;
 
     public variableAttribution(List<Token> tokens){
         this.tokens = tokens;
+        this._exp = new exp(this.tokens);
     }
 
     public int run(int pos){
@@ -21,7 +24,13 @@ public class variableAttribution {
         match(Tokens_List.ATRIBUICAO);
         GeradorArvore.grArvLex(this.tokens, this.pos);
         if(isValor()){
-
+            if(isOp()){
+                GeradorArvore.grArvExp();
+                this.pos = this._exp.run(this.pos);
+                GeradorArvore.grArvFExp();
+            }else{
+                GeradorArvore.grArvLex(this.tokens, this.pos);
+            }
         }else{
             match(Tokens_List.ID);
             GeradorArvore.grArvLex(this.tokens, this.pos);
@@ -57,6 +66,18 @@ public class variableAttribution {
         
             default:
                 this.pos --;
+                return false;
+        }
+    }
+
+    public boolean isOp(){
+        switch(this.tokens.get(this.pos+1).tipo){
+            case ADICAO:
+            case SUBTRACAO:
+            case MULTIPLICACAO:
+            case DIVISAO:
+                return true;
+            default:
                 return false;
         }
     }

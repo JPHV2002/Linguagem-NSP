@@ -16,7 +16,7 @@ public class Compile {
     }
 
     public void sintatico(List<Token> tokens){
-        System.out.print("\tAnalise Sintatica... ");
+        // System.out.print("\tAnalise Sintatica... ");
         Sintatico anSintatico;
         (anSintatico = new Sintatico()).tokenList = tokens;
         anSintatico.run();
