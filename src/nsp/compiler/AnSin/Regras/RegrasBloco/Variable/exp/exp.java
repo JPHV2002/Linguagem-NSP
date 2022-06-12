@@ -41,7 +41,6 @@ public class exp {
                 posExp = runExp(posExp);
                 GeradorArvore.grArvFExp();
                 this.expr.grAvalMais();
-                System.out.println(expr.pilha());
             }else if(this.tokens.get(posExp).tipo == Tokens_List.SUBTRACAO){
                 GeradorArvore.grArvLex(this.tokens, posExp);
                 posExp ++;
@@ -49,7 +48,6 @@ public class exp {
                 posExp = runExp(posExp);
                 GeradorArvore.grArvFExp();
                 this.expr.grAvalMenos();
-                System.out.println(expr.pilha());
             }else{
                 // Else
             }
@@ -72,7 +70,6 @@ public class exp {
             posTermo = runTermo(posTermo);
             GeradorArvore.grArvFTermo();
             this.expr.grAvalMulti();
-            System.out.println(expr.pilha());
             return posTermo;
         }else if(this.tokens.get(posTermo).tipo == Tokens_List.DIVISAO){
             GeradorArvore.grArvLex(this.tokens, posTermo);
@@ -81,7 +78,6 @@ public class exp {
             posTermo = runTermo(posTermo);
             GeradorArvore.grArvFTermo();
             this.expr.grAvalDiv();
-            System.out.println(expr.pilha());
         }else{
             return posTermo;
         }

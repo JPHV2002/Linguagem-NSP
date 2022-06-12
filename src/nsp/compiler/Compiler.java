@@ -39,7 +39,7 @@ public class Compiler {
             //Sintatico
             this.compile.sintatico(tokens);
             System.out.println("Done");
-            GeradorArvore.printArv();
+            // GeradorArvore.printArv();
         } catch (RuntimeException e) {
             System.out.println("Error");
             System.out.println(e);

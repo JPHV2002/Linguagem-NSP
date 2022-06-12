@@ -4,6 +4,7 @@ import java.util.List;
 
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
+import nsp.compiler.AnSem.Ambiente;
 import nsp.compiler.AnSin.Utils.Utils;
 import nsp.compiler.Arvore.GeradorArvore;
 
@@ -27,10 +28,16 @@ public class FunctionMain {
         this.pos = Utils.match(this.tokens,Tokens_List.F_PARENTESES,this.pos);
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.match(this.tokens,Tokens_List.A_CHAVES,this.pos);
+        
+        Ambiente.iniciarEscopo();
+        
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.lookAhead(this.pos);
         GeradorArvore.grArvBlock();
         this.pos = this.bloco.run(this.pos);
+        Ambiente.printPilha();
+        Ambiente.iniciarEscopo();
+
         GeradorArvore.grArvFBlock();
         GeradorArvore.grArvLex(this.tokens, this.pos-1);
         return this.pos;

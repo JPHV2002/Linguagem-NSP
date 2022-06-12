@@ -4,6 +4,7 @@ import java.util.List;
 
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
+import nsp.compiler.AnSem.Ambiente;
 import nsp.compiler.AnSin.Regras.RegrasBloco.Retorno.Return;
 import nsp.compiler.AnSin.Regras.RegrasBloco.SelectionBlock.ifStatement;
 import nsp.compiler.AnSin.Regras.RegrasBloco.Show.Show;
@@ -39,15 +40,19 @@ public class Bloco {
                 GeradorArvore.grArvFVariableDeclaration();
                 run(this.pos);
             }else if(this.tokens.get(this.pos).tipo == Tokens_List.ID){
+                Ambiente.achar(this.tokens.get(this.pos).lexeme);
+
                 GeradorArvore.grArvVariableAtribution();
                 GeradorArvore.grArvLex(this.tokens, this.pos);
                 this.pos = this.va.run(this.pos);
                 GeradorArvore.grArvFVariableAtribution();
                 run(this.pos);
             }else if(this.tokens.get(this.pos).tipo == Tokens_List.IF){
+
                 GeradorArvore.grArvIfStat();
                 this.pos = this.ifS.run(this.pos);
                 GeradorArvore.grArvFIfStat();
+
                 run(this.pos);
             }else if(this.tokens.get(this.pos).tipo == Tokens_List.RETURN){
                 GeradorArvore.grArvReturn();

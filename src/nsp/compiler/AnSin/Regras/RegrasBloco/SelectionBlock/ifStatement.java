@@ -4,6 +4,7 @@ import java.util.List;
 
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
+import nsp.compiler.AnSem.Ambiente;
 import nsp.compiler.AnSin.Regras.Error;
 import nsp.compiler.AnSin.Utils.Utils;
 import nsp.compiler.Arvore.GeradorArvore;
@@ -35,27 +36,44 @@ public class ifStatement {
         this.pos = Utils.match(this.tokens, Tokens_List.F_PARENTESES, this.pos);
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.match(this.tokens, Tokens_List.A_CHAVES, this.pos);
+
+        Ambiente.iniciarEscopo();
+
         GeradorArvore.grArvLex(this.tokens, this.pos);
         GeradorArvore.grArvBlock();
+
         this.pos = this.opc.run(this.pos+1);
+
         GeradorArvore.grArvFBlock();
         GeradorArvore.grArvLex(this.tokens, this.pos);
+
+        Ambiente.fecharEscopo();
+
         this.pos = Utils.match(this.tokens, Tokens_List.ELSE, this.pos);
         GeradorArvore.grArvLex(this.tokens, this.pos);
         this.pos = Utils.match(this.tokens, Tokens_List.A_CHAVES, this.pos);
+
+        Ambiente.iniciarEscopo();
+
         GeradorArvore.grArvLex(this.tokens, this.pos);
         GeradorArvore.grArvBlock();
+
         this.pos = this.opc.run(this.pos+1);
+
         GeradorArvore.grArvFBlock();
         GeradorArvore.grArvLex(this.tokens, this.pos);
+
+        Ambiente.fecharEscopo();
         return this.pos+1;
     }
 
     public void isExp(){
         if (match(Tokens_List.ID)) {
+            Ambiente.achar(this.tokens.get(this.pos).lexeme);
             this.pos ++;
             if(isOperador()){
                 match(Tokens_List.ID);
+                Ambiente.achar(this.tokens.get(this.pos).lexeme);
             }else{
                 Error.errorTipo(this.tokens.get(this.pos).tipo);
             }

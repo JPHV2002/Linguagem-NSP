@@ -4,6 +4,7 @@ import java.util.List;
 
 import nsp.compiler.AnLex.Token;
 import nsp.compiler.AnLex.Tokens_List;
+import nsp.compiler.AnSem.Ambiente;
 import nsp.compiler.AnSin.Regras.Error;
 import nsp.compiler.AnSin.Regras.RegrasBloco.Variable.exp.exp;
 import nsp.compiler.Arvore.GeradorArvore;
@@ -33,6 +34,7 @@ public class variableAttribution {
             }
         }else{
             match(Tokens_List.ID);
+            Ambiente.achar(this.tokens.get(this.pos).lexeme);
             GeradorArvore.grArvLex(this.tokens, this.pos);
         }
         match(Tokens_List.EOI);
